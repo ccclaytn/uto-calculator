@@ -6,63 +6,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UTO Calculator</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap');
 
 ```
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
     body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Noto Sans', Arial, sans-serif;
+        background: radial-gradient(ellipse at center, #2e3440 0%, #1e2025 100%);
+        background-attachment: fixed;
         min-height: 100vh;
-        padding: 20px;
+        color: #f8f8f2;
+        line-height: 1.6;
+        padding: 20px 10px;
     }
     
     .container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        background: linear-gradient(135deg, #2e3440 0%, #3b4252 100%);
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        border: 1px solid #4c566a;
         overflow: hidden;
+        position: relative;
+    }
+    
+    .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #e74c3c, #c0392b, #a93226);
     }
     
     .header {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        color: white;
-        padding: 30px;
+        background: linear-gradient(135deg, #434c5e 0%, #3b4252 100%);
+        color: #eceff4;
+        padding: 40px 30px;
         text-align: center;
+        border-bottom: 1px solid #4c566a;
     }
     
     .header h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         margin-bottom: 10px;
-        font-weight: 700;
+        font-weight: 300;
+        letter-spacing: -1px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
-    .header p {
-        opacity: 0.9;
-        font-size: 1.1rem;
+    .header h1::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 2px;
+        background: #e74c3c;
+        margin: 20px auto 0;
     }
     
     .content {
         padding: 30px;
     }
     
-    .guidelines {
-        background: #f8fafc;
-        border-radius: 12px;
-        padding: 20px;
+    .section {
         margin-bottom: 30px;
-        border-left: 4px solid #4facfe;
+    }
+    
+    .guidelines {
+        background: rgba(59, 66, 82, 0.7);
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid #4c566a;
+        backdrop-filter: blur(10px);
     }
     
     .guidelines h3 {
-        color: #2d3748;
-        margin-bottom: 15px;
-        font-size: 1.2rem;
+        color: #e74c3c;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        font-weight: 600;
     }
     
     .guidelines ul {
@@ -71,174 +101,364 @@
     }
     
     .guidelines li {
-        margin-bottom: 8px;
-        padding-left: 20px;
+        margin-bottom: 12px;
+        padding-left: 25px;
         position: relative;
-        color: #4a5568;
+        color: #d8dee9;
+        font-size: 0.95rem;
     }
     
     .guidelines li:before {
-        content: "•";
-        color: #4facfe;
+        content: "▸";
+        color: #c0392b;
         font-weight: bold;
         position: absolute;
         left: 0;
     }
     
+    .staff-info {
+        background: rgba(67, 76, 94, 0.7);
+        border: 1px solid #c0392b;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 25px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .staff-info h3 {
+        color: #e74c3c;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    
     .activation-form {
-        background: #ffffff;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
+        background: rgba(59, 66, 82, 0.5);
+        border: 1px solid #4c566a;
+        border-radius: 8px;
         padding: 25px;
         margin-bottom: 20px;
         transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
     }
     
     .activation-form:hover {
-        border-color: #4facfe;
-        box-shadow: 0 4px 12px rgba(79, 172, 254, 0.1);
+        border-color: #c0392b;
+        background: rgba(59, 66, 82, 0.7);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
     
     .form-row {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
         gap: 20px;
         align-items: end;
-        flex-wrap: wrap;
     }
     
     .form-group {
-        flex: 1;
-        min-width: 120px;
+        display: flex;
+        flex-direction: column;
     }
     
     .form-group label {
-        display: block;
         margin-bottom: 8px;
         font-weight: 600;
-        color: #2d3748;
+        color: #d8dee9;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .form-group input {
-        width: 100%;
         padding: 12px 16px;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
+        border: 1px solid #4c566a;
+        border-radius: 6px;
         font-size: 1rem;
-        transition: border-color 0.3s ease;
+        background: rgba(46, 52, 64, 0.8);
+        color: #eceff4;
+        transition: all 0.3s ease;
+        font-family: 'Noto Sans', monospace;
     }
     
     .form-group input:focus {
         outline: none;
-        border-color: #4facfe;
-        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        border-color: #e74c3c;
+        box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+        background: rgba(46, 52, 64, 1);
+    }
+    
+    .form-group input::placeholder {
+        color: #616e88;
+        font-style: italic;
     }
     
     .btn {
-        padding: 12px 24px;
+        padding: 12px 20px;
         border: none;
-        border-radius: 8px;
-        font-size: 1rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        font-family: 'Noto Sans', Arial, sans-serif;
+        white-space: nowrap;
     }
     
     .btn-primary {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        color: white;
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: #eceff4;
+        border: 1px solid #e74c3c;
     }
     
     .btn-primary:hover {
+        background: linear-gradient(135deg, #ec7063, #e74c3c);
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
     }
     
     .btn-secondary {
-        background: #e2e8f0;
-        color: #4a5568;
+        background: rgba(67, 76, 94, 0.8);
+        color: #d8dee9;
+        border: 1px solid #4c566a;
     }
     
     .btn-secondary:hover {
-        background: #cbd5e0;
+        background: rgba(67, 76, 94, 1);
+        border-color: #c0392b;
     }
     
     .btn-danger {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        color: white;
+        background: linear-gradient(135deg, #a93226, #922b21);
+        color: #eceff4;
+        border: 1px solid #a93226;
     }
     
     .btn-danger:hover {
+        background: linear-gradient(135deg, #cb4335, #a93226);
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        box-shadow: 0 6px 20px rgba(169, 50, 38, 0.3);
     }
     
     .results {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        border-radius: 12px;
+        background: rgba(46, 52, 64, 0.8);
+        border: 1px solid #4c566a;
+        border-radius: 8px;
         padding: 25px;
         margin-top: 30px;
+        backdrop-filter: blur(10px);
     }
     
     .results h3 {
-        color: #2d3748;
-        margin-bottom: 20px;
-        font-size: 1.5rem;
+        color: #e74c3c;
+        margin-bottom: 25px;
+        font-size: 1.4rem;
         text-align: center;
+        font-weight: 600;
     }
     
     .activation-result {
-        background: white;
-        border-radius: 8px;
-        padding: 15px;
+        background: rgba(59, 66, 82, 0.6);
+        border-left: 4px solid #c0392b;
+        border-radius: 6px;
+        padding: 20px;
         margin-bottom: 15px;
-        border-left: 4px solid #4facfe;
+        border: 1px solid rgba(76, 86, 106, 0.5);
     }
     
-    .activation-result:last-child {
-        margin-bottom: 0;
+    .activation-result:last-of-type {
+        margin-bottom: 20px;
+    }
+    
+    .activation-result strong {
+        color: #e74c3c;
+    }
+    
+    .activation-result small {
+        color: #ec7063;
     }
     
     .total-uto {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+        background: linear-gradient(135deg, #c0392b, #434c5e);
+        color: #eceff4;
         text-align: center;
-        padding: 20px;
-        border-radius: 12px;
-        margin-top: 20px;
+        padding: 25px;
+        border-radius: 8px;
+        border: 1px solid #c0392b;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
     
     .total-uto h4 {
         font-size: 1.8rem;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        font-weight: 300;
+        color: #e74c3c;
+    }
+    
+    .total-uto p {
+        color: #d08770;
+        font-weight: 600;
     }
     
     .error {
-        background: #fed7d7;
-        color: #c53030;
-        padding: 12px 16px;
-        border-radius: 8px;
+        background: rgba(169, 50, 38, 0.2);
+        color: #a93226;
+        padding: 15px;
+        border-radius: 6px;
         margin-top: 10px;
-        border-left: 4px solid #e53e3e;
+        border-left: 4px solid #a93226;
+        border: 1px solid rgba(169, 50, 38, 0.3);
     }
     
-    .add-activation {
-        text-align: center;
-        margin: 20px 0;
+    .success {
+        background: rgba(163, 190, 140, 0.2);
+        color: #a3be8c;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        border-left: 4px solid #a3be8c;
+        border: 1px solid rgba(163, 190, 140, 0.3);
     }
     
-    @media (max-width: 600px) {
-        .form-row {
-            flex-direction: column;
+    .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 30px 0;
+        flex-wrap: wrap;
+    }
+    
+    .report-box {
+        background: rgba(46, 52, 64, 0.9);
+        padding: 25px;
+        border-radius: 8px;
+        border: 2px dashed #c0392b;
+        margin: 25px 0;
+        backdrop-filter: blur(10px);
+    }
+    
+    .report-box pre {
+        font-family: 'Courier New', monospace;
+        white-space: pre-wrap;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #d8dee9;
+        background: rgba(59, 66, 82, 0.5);
+        padding: 20px;
+        border-radius: 6px;
+        border: 1px solid #4c566a;
+    }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px 5px;
+        }
+        
+        .container {
+            margin: 0;
+            border-radius: 0;
+        }
+        
+        .header {
+            padding: 30px 20px;
         }
         
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
         }
         
         .content {
-            padding: 20px;
+            padding: 20px 15px;
+        }
+        
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .button-group {
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn {
+            width: 100%;
+            justify-self: center;
+        }
+        
+        .guidelines,
+        .staff-info,
+        .activation-form {
+            padding: 20px 15px;
+        }
+        
+        .results {
+            padding: 20px 15px;
+        }
+        
+        .activation-result {
+            padding: 15px;
+        }
+        
+        .total-uto {
+            padding: 20px 15px;
+        }
+        
+        .total-uto h4 {
+            font-size: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .header h1 {
+            font-size: 1.8rem;
+        }
+        
+        .content {
+            padding: 15px 10px;
+        }
+        
+        .guidelines,
+        .staff-info,
+        .activation-form,
+        .results {
+            padding: 15px 10px;
+        }
+        
+        .button-group {
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px 16px;
+            font-size: 0.85rem;
+        }
+    }
+    
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .container {
+            border: 2px solid #eceff4;
+        }
+        
+        .form-group input {
+            border: 2px solid #d8dee9;
+        }
+        
+        .btn {
+            border-width: 2px;
+        }
+    }
+    
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
         }
     }
 </style>
@@ -253,37 +473,40 @@
 
 ```
     <div class="content">
-        <div class="guidelines">
-            <h3>UTO Guidelines</h3>
-            <ul>
-                <li>UTO is given for callback work done between 12am and 6am, capped at 4.5hrs</li>
-                <li>Staff resuming work after 12 noon will not be given a meal break</li>
-                <li>UTO = Callback duration after 12am + 1hr post ROT (first activation only)</li>
-                <li>Multiple activations: Total UTO is sum of each activation, bonus +1hr only for first</li>
-            </ul>
+        <div class="section">
+            <div class="guidelines">
+                <h3>UTO Guidelines</h3>
+                <ul>
+                    <li>UTO is given for callback work done between 12am and 6am, capped at 4.5hrs</li>
+                    <li>Staff resuming work after 12 noon will not be given a meal break</li>
+                    <li>UTO = Callback duration after 12am + 1hr post ROT (first activation only)</li>
+                    <li>Multiple activations: Total UTO is sum of each activation, bonus +1hr only for first</li>
+                </ul>
+            </div>
         </div>
         
-        <div class="activation-form" style="background: #f0f9ff; border-color: #0ea5e9;">
-            <h3 style="margin-bottom: 20px; color: #0c4a6e;">Staff Information</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="initials">Initials</label>
-                    <input type="text" id="initials" placeholder="e.g., BYT" maxlength="5">
-                </div>
-                <div class="form-group">
-                    <label for="modality">On Call Modality</label>
-                    <input type="text" id="modality" placeholder="e.g., ICL, IR, HOT" maxlength="50">
+        <div class="section">
+            <div class="staff-info">
+                <h3>Staff Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="initials">Initials</label>
+                        <input type="text" id="initials" placeholder="e.g., BYT" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="modality">On Call Modality</label>
+                        <input type="text" id="modality" placeholder="e.g., ICL, IR, HOT" maxlength="50">
+                    </div>
                 </div>
             </div>
         </div>
         
         <div id="activations-container"></div>
         
-        <div class="add-activation">
+        <div class="button-group">
             <button class="btn btn-primary" onclick="addActivation()">+ Add Activation</button>
-            <button class="btn btn-secondary" onclick="calculateTotal()" style="margin-left: 10px;">Calculate Total UTO</button>
-            <button class="btn btn-secondary" onclick="generateReport()" style="margin-left: 10px;">Generate Report</button>
-            <button class="btn btn-danger" onclick="clearAll()" style="margin-left: 10px;">Clear All</button>
+            <button class="btn btn-secondary" onclick="generateReport()">Generate Report</button>
+            <button class="btn btn-danger" onclick="clearAll()">Clear All</button>
         </div>
         
         <div id="results"></div>
@@ -306,15 +529,14 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="act-${activationCount}">Activation Time (ACT)</label>
-                    <input type="text" id="act-${activationCount}" placeholder="e.g., 2300" maxlength="4">
+                    <input type="text" id="act-${activationCount}" placeholder="e.g., 2300" maxlength="4" oninput="autoCalculate(${activationCount})">
                 </div>
                 <div class="form-group">
                     <label for="rot-${activationCount}">Room Out Time (ROT)</label>
-                    <input type="text" id="rot-${activationCount}" placeholder="e.g., 0200" maxlength="4">
+                    <input type="text" id="rot-${activationCount}" placeholder="e.g., 0200" maxlength="4" oninput="autoCalculate(${activationCount})">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary" onclick="calculateUTO(${activationCount})">Calculate</button>
-                    <button class="btn btn-danger" onclick="removeActivation(${activationCount})" style="margin-left: 10px;">Remove</button>
+                    <button class="btn btn-danger" onclick="removeActivation(${activationCount})">Remove</button>
                 </div>
             </div>
             <div id="result-${activationCount}"></div>
@@ -330,6 +552,16 @@
             // Remove from activations array
             activations = activations.filter(a => a.id !== id);
             calculateTotal();
+        }
+    }
+
+    function autoCalculate(id) {
+        const actInput = document.getElementById(`act-${id}`);
+        const rotInput = document.getElementById(`rot-${id}`);
+        
+        // Only calculate if both fields have values
+        if (actInput.value.trim() && rotInput.value.trim()) {
+            calculateUTO(id);
         }
     }
 
@@ -444,13 +676,13 @@
         // Display result
         if (uto === 0) {
             resultDiv.innerHTML = `
-                <div style="margin-top: 15px; padding: 15px; background: #fed7d7; border-radius: 8px; color: #c53030;">
+                <div class="error">
                     <strong>No UTO:</strong> No qualifying work between 12am-6am
                 </div>
             `;
         } else {
             resultDiv.innerHTML = `
-                <div style="margin-top: 15px; padding: 15px; background: #c6f6d5; border-radius: 8px; color: #22543d;">
+                <div class="success">
                     <strong>Base UTO:</strong> ${minutesToHours(uto)}<br>
                     <small>${explanation.join(', ')}</small>
                 </div>
@@ -568,8 +800,8 @@
         reportDiv.innerHTML = `
             <div class="results">
                 <h3>Generated Report</h3>
-                <div style="background: white; padding: 20px; border-radius: 8px; border: 2px dashed #4facfe; margin: 20px 0;">
-                    <pre style="font-family: monospace; white-space: pre-wrap; margin: 0; font-size: 14px; line-height: 1.5;">${reportText}</pre>
+                <div class="report-box">
+                    <pre>${reportText}</pre>
                 </div>
                 <div style="text-align: center;">
                     <button class="btn btn-primary" onclick="copyReport('${reportText.replace(/'/g, "\\'")}')">Copy to Clipboard</button>
