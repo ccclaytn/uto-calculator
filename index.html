@@ -448,7 +448,6 @@
         }
     }
 </style>
-```
 
 </head>
 <body>
@@ -731,7 +730,7 @@
 
     function generateReport() {
         const initials = document.getElementById('initials').value.trim().toUpperCase();
-        const modality = document.getElementById('modality').value.trim();
+        const modality = document.getElementById('modality').value.trim().toUpperCase();
         
         if (!initials || !modality) {
             alert('Please enter both initials and modality before generating report.');
