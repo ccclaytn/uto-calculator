@@ -8,7 +8,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
 
-```
     * {
         margin: 0;
         padding: 0;
@@ -454,7 +453,7 @@
         <header id="header">
             <div class="inner">
                 <h1>UTO Calculator</h1>
-                <p>Unrecorded Time Off Calculator for Healthcare Callbacks</p>
+                <p>Unrecorded Time Off Calculator</p>
             </div>
         </header>
 
@@ -762,6 +761,9 @@
         
         reportText += `UTO: ${minutesToHours(cappedTotal)}`;
         
+        // Store report text globally for copying
+        window.currentReport = reportText;
+        
         const reportDiv = document.createElement('div');
         reportDiv.innerHTML = `
             <section>
@@ -771,7 +773,7 @@
                         <pre>${reportText}</pre>
                     </div>
                     <div class="buttons">
-                        <button class="button primary" onclick="copyReport('${reportText.replace(/'/g, "\\'")}')">Copy to Clipboard</button>
+                        <button class="button primary" onclick="copyReport()">Copy to Clipboard</button>
                     </div>
                 </div>
             </section>
@@ -785,18 +787,53 @@
         }
     }
 
-    function copyReport(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('Report copied to clipboard!');
-        }).catch(() => {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            alert('Report copied to clipboard!');
-        });
+    function copyReport() {
+        const reportText = window.currentReport;
+        
+        if (!reportText) {
+            alert('No report to copy. Please generate a report first.');
+            return;
+        }
+        
+        // Try modern clipboard API first
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(reportText).then(() => {
+                alert('Report copied to clipboard!');
+            }).catch(() => {
+                // Fallback if modern API fails
+                fallbackCopyToClipboard(reportText);
+            });
+        } else {
+            // Use fallback method
+            fallbackCopyToClipboard(reportText);
+        }
+    }
+    
+    function fallbackCopyToClipboard(text) {
+        // Create temporary textarea
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        textarea.style.top = '-999999px';
+        document.body.appendChild(textarea);
+        
+        // Select and copy
+        textarea.focus();
+        textarea.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                alert('Report copied to clipboard!');
+            } else {
+                alert('Copy failed. Please manually select and copy the text above.');
+            }
+        } catch (err) {
+            alert('Copy not supported. Please manually select and copy the text above.');
+        }
+        
+        document.body.removeChild(textarea);
     }
 
     function clearAll() {
@@ -811,7 +848,7 @@
     // Add first activation on load
     addActivation();
 </script>
-```
+
 
 </body>
 </html>
