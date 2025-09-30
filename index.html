@@ -1,881 +1,890 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UTO Calculator</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    html {
-        font-size: 18px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        font-weight: 400;
-        font-size: 1rem;
-        line-height: 1.6;
-        color: #1d1d1f;
-        background: #fafafa;
-        -webkit-text-size-adjust: none;
-        text-rendering: optimizeLegibility;
-        font-feature-settings: "kern" 1;
-    }
-    
-    /* Layout */
-    #wrapper {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        position: relative;
-        z-index: 2;
-    }
-    
-    #wrapper::before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, rgba(248, 249, 250, 0.95), rgba(233, 236, 239, 0.95));
-        z-index: -1;
-    }
-    
-    /* Header */
-    #header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        position: relative;
-        padding: 4rem 0 3rem 0;
-    }
-    
-    #header h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #1d1d1f;
-        margin: 0 0 0.5rem 0;
-        text-shadow: none;
-        letter-spacing: -0.03em;
-    }
-    
-    #header p {
-        font-size: 1.1rem;
-        font-weight: 400;
-        color: #86868b;
-        margin: 0;
-    }
-    
-    /* Main */
-    #main {
-        flex-grow: 1;
-        padding: 0;
-    }
-    
-    .inner {
-        max-width: 75rem;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-    
-    /* Sections */
-    section {
-        padding: 2rem 0 1rem 0;
-        border-top: solid 2px rgba(44,44,44,0.125);
-        margin: 1.5rem 0 0 0;
-    }
-    
-    section:first-child {
-        border-top: 0;
-        margin-top: 0;
-        padding-top: 1rem;
-    }
-    
-    section.special {
-        text-align: center;
-    }
-    
-    /* Typography */
-    h1, h2, h3, h4, h5, h6 {
-        color: #1d1d1f;
-        font-weight: 600;
-        line-height: 1.4;
-        margin: 0 0 1rem 0;
-        letter-spacing: -0.02em;
-    }
-    
-    h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-    }
-    
-    h2 {
-        font-size: 1.75rem;
-        font-weight: 600;
-    }
-    
-    h3 {
-        font-size: 1.35rem;
-        font-weight: 600;
-    }
-    
-    p {
-        margin: 0 0 1.5rem 0;
-        color: #1d1d1f;
-        font-weight: 400;
-    }
-    
-    /* Forms */
-    form {
-        margin: 0 0 2rem 0;
-    }
-    
-    label {
-        color: #1d1d1f;
-        display: block;
-        font-size: 0.9rem;
-        font-weight: 500;
-        margin: 0 0 0.5rem 0;
-        letter-spacing: -0.01em;
-    }
-    
-    input[type="text"] {
-        appearance: none;
-        background: rgba(255,255,255,0.8);
-        border-radius: 12px;
-        border: 1px solid rgba(0,0,0,0.1);
-        color: #1d1d1f;
-        display: block;
-        outline: 0;
-        padding: 0 1rem;
-        text-decoration: none;
-        width: 100%;
-        height: 2.75rem;
-        font-family: inherit;
-        font-size: 1rem;
-        font-weight: 400;
-        transition: all 0.2s ease;
-    }
-    
-    input[type="text"]:focus {
-        border-color: #007aff;
-        box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
-        background: rgba(255,255,255,1);
-    }
-    
-    input[type="text"]::placeholder {
-        color: #86868b;
-        opacity: 1.0;
-    }
-    
-    /* Buttons */
-    .button {
-        appearance: none;
-        background-color: #007aff;
-        border-radius: 12px;
-        border: none;
-        color: #ffffff !important;
-        cursor: pointer;
-        display: inline-block;
-        font-family: inherit;
-        font-size: 1rem;
-        font-weight: 500;
-        height: 2.75rem;
-        letter-spacing: -0.01em;
-        line-height: 2.75rem;
-        outline: 0;
-        padding: 0 1.5rem;
-        text-align: center;
-        text-decoration: none;
-        white-space: nowrap;
-        transition: all 0.2s ease;
-        min-width: 100px;
-    }
-    
-    .button:hover {
-        background-color: #0056d3;
-        transform: translateY(-1px);
-        box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
-    }
-    
-    .button:active {
-        transform: translateY(0);
-        box-shadow: 0 4px 15px rgba(0, 122, 255, 0.2);
-    }
-    
-    .button.primary {
-        background-color: #007aff;
-        color: #ffffff !important;
-    }
-    
-    .button.primary:hover {
-        background-color: #0056d3;
-    }
-    
-    .button.small {
-        font-size: 1rem;
-        height: 2.75rem;
-        line-height: 2.75rem;
-        padding: 0 1.5rem;
-        min-width: 100px;
-    }
-    
-    /* Tiles */
-    .tiles {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-        grid-gap: 2rem;
-        margin: 0 0 2rem 0;
-    }
-    
-    .tiles article {
-        align-items: center;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        cursor: default;
-        display: flex;
-        height: 20rem;
-        justify-content: center;
-        text-decoration: none;
-        width: 100%;
-        border-radius: 0.375rem;
-        overflow: hidden;
-        transition: transform 0.2s ease, filter 0.2s ease;
-    }
-    
-    .tile {
-        background: rgba(255,255,255,0.8);
-        border: 1px solid rgba(0,0,0,0.04);
-        border-radius: 16px;
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-        margin-bottom: 1rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-    }
-    
-    .tile:hover {
-        background: rgba(255,255,255,0.95);
-        border-color: rgba(0,0,0,0.08);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 35px rgba(0,0,0,0.12);
-    }
-    
-    /* Grid */
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-        grid-gap: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .grid-2 {
-        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-    }
-    
-    /* Buttons Container */
-    .buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        justify-content: center;
-        margin: 1.5rem 0;
-    }
-    
-    /* Results */
-    .results {
-        background: rgba(255,255,255,0.9);
-        border: solid 2px rgba(44,44,44,0.125);
-        border-radius: 0.375rem;
-        padding: 1.5rem;
-        margin-top: 1.5rem;
-        box-shadow: 0 2px 8px rgba(44,44,44,0.1);
-    }
-    
-    .result-item {
-        background: rgba(248,249,250,0.8);
-        border-left: solid 0.25rem #6c757d;
-        border-radius: 0.375rem;
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-        border: solid 1px rgba(44,44,44,0.1);
-    }
-    
-    .result-item:last-child {
-        margin-bottom: 0;
-    }
-    
-    .result-item:last-child {
-        margin-bottom: 0;
-    }
-    
-    .total-result {
-        background: linear-gradient(135deg, #1d1d1f, #2d2d2f);
-        border: none;
-        border-radius: 16px;
-        padding: 1.5rem;
-        text-align: center;
-        margin-top: 1rem;
-        color: #ffffff;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-    
-    .total-result h4 {
-        font-size: 1.75rem;
-        margin-bottom: 0.25rem;
-        color: #ffffff;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-    }
-    
-    .total-result p {
-        color: #f5f5f7;
-        font-weight: 400;
-    }
-    
-    /* Status Messages */
-    .message {
-        border-radius: 0.375rem;
-        margin: 0 0 2rem 0;
-        padding: 1rem 1.5rem;
-    }
-    
-    .message.success {
-        background: rgba(52, 199, 89, 0.1);
-        border-left: solid 3px #34c759;
-        color: #1d1d1f;
-        border-radius: 12px;
-        font-weight: 400;
-    }
-    
-    .message.error {
-        background: rgba(255, 59, 48, 0.1);
-        border-left: solid 3px #ff3b30;
-        color: #1d1d1f;
-        border-radius: 12px;
-        font-weight: 400;
-    }
-    
-    /* Report */
-    .report-box {
-        background: rgba(248,249,250,0.95);
-        border: solid 2px rgba(44,44,44,0.125);
-        border-radius: 0.375rem;
-        margin: 1rem 0;
-        padding: 0;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(44,44,44,0.1);
-    }
-    
-    .report-box pre {
-        background: none;
-        border: none;
-        color: #2c2c2c;
-        font-family: 'Courier New', monospace;
-        font-size: 0.8rem;
-        line-height: 1.5;
-        margin: 0;
-        padding: 1.5rem;
-        white-space: pre-wrap;
-    }
-    
-    /* Mobile */
-    @media screen and (max-width: 980px) {
-        html {
-            font-size: 16px;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
-        
-        #header {
-            padding: 3rem 0 2rem 0;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
         }
-        
-        #header h1 {
-            font-size: 2.25rem;
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .inner {
-            padding: 0 1rem;
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
         }
-        
-        section {
-            padding: 1.5rem 0 1rem 0;
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
-        
-        .grid {
-            grid-template-columns: 1fr;
-            grid-gap: 1.5rem;
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
         }
-        
-        .buttons {
-            flex-direction: column;
+
+        .header p {
+            opacity: 0.95;
+            font-size: 1.15rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
             align-items: center;
+            font-weight: 700;
         }
-        
-        .button {
-            width: 100%;
-            max-width: 20rem;
-        }
-    }
-    
-    @media screen and (max-width: 736px) {
-        html {
-            font-size: 14px;
-        }
-        
-        #header {
-            padding: 2rem 0 1.5rem 0;
-        }
-        
-        #header h1 {
-            font-size: 2rem;
-        }
-        
-        .tile {
-            padding: 1rem;
-        }
-        
-        .results {
-            padding: 1rem;
-        }
-        
-        .result-item {
-            padding: 0.75rem;
-        }
-    }
-    
-    @media screen and (max-width: 480px) {
-        .inner {
-            padding: 0 0.5rem;
-        }
-        
-        #header h1 {
-            font-size: 1.75rem;
-        }
-        
-        .tile {
-            padding: 0.75rem;
-        }
-    }
-</style>
 
+        .section-title::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50%;
+            margin-right: 12px;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .form-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 0.95rem;
+            letter-spacing: 0.2px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e8ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .time-input {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .pto-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-with-label {
+            position: relative;
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            font-weight: 500;
+            pointer-events: none;
+        }
+
+        input.has-suffix {
+            padding-right: 50px;
+        }
+
+        .activation-group {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #dee2e6;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .activation-group:hover {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .activation-group.additional {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #f8fff8 0%, #e8f8e8 100%);
+        }
+
+        .activation-group.additional:hover {
+            border-color: #27ae60;
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.15);
+        }
+
+        .activation-header {
+            font-weight: 700;
+            color: #495057;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        .remove-activation {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .remove-activation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+            margin-top: 10px;
+        }
+
+        .btn-add:hover {
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            font-size: 1.2rem;
+            padding: 18px 36px;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.35);
+        }
+
+        .btn-calculate:hover {
+            box-shadow: 0 12px 35px rgba(231, 76, 60, 0.45);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .checkbox-group:hover {
+            background: #e9ecef;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: #3498db;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .output-section {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .output-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .output-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .output-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 700;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .output-text {
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+            white-space: pre-line;
+            backdrop-filter: blur(10px);
+            font-size: 1.05rem;
+        }
+
+        .error {
+            background: linear-gradient(135deg, #fee, #fdd);
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 18px 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            box-shadow: 0 5px 20px rgba(204, 51, 51, 0.15);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 25px;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .btn-calculate {
+                font-size: 1.1rem;
+                padding: 16px 28px;
+            }
+
+            .pto-input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div id="wrapper">
-        <!-- Header -->
-        <header id="header">
-            <div class="inner">
-                <h1>UTO Calculator</h1>
-                <p>Unrecorded Time Off Calculator</p>
-            </div>
-        </header>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 UTO Calculator</h1>
+            <p>Calculate Unrecorded Time Off from overnight activations</p>
+        </div>
 
-    <!-- Main -->
-    <div id="main">
-        <div class="inner">
-            <!-- Guidelines -->
-            <section class="special">
-                <div class="tile">
-                    <h3>UTO Guidelines</h3>
-                    <p>UTO is given for callback work done between 12am and 6am, capped at 4.5hrs. Staff resuming work after 12 noon will not be given a meal break.</p>
-                    <p><strong>Formula:</strong> UTO = Callback duration after 12am + 1hr bonus (for each activation)</p>
-                    <p><strong>Multiple activations:</strong> Total UTO is sum of each activation, +1hr bonus for every activation</p>
+        <div class="form-container">
+            <div class="section fade-in">
+                <h2 class="section-title">Basic Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="modality">On-call Modality</label>
+                        <select id="modality" required>
+                            <option value="">Select modality...</option>
+                            <option value="IR">IR</option>
+                            <option value="ICL">ICL</option>
+                            <option value="HOT">HOT</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-col">
+                        <label for="initials">Initials</label>
+                        <input type="text" id="initials" placeholder="e.g. BYT" maxlength="4" required>
+                    </div>
                 </div>
-            </section>
 
-            <!-- Staff Information -->
-            <section>
-                <div class="tile">
-                    <h3>Staff Information</h3>
-                    <form>
-                        <div class="grid grid-2">
-                            <div>
-                                <label for="initials">Initials</label>
-                                <input type="text" id="initials" placeholder="e.g., BYT" maxlength="5">
+                <div id="activations-container">
+                    <div class="activation-group">
+                        <div class="activation-header">
+                            <span>Primary Activation</span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>ACT (Activation Time)</label>
+                                <input type="text" class="time-input act-input" placeholder="e.g. 2130" maxlength="4" pattern="[0-9]{4}" required>
                             </div>
-                            <div>
-                                <label for="modality">On Call Modality</label>
-                                <input type="text" id="modality" placeholder="e.g., ICL, IR, HOT" maxlength="50">
+                            <div class="form-col">
+                                <label>ROT (Room Out Time)</label>
+                                <input type="text" class="time-input rot-input" placeholder="e.g. 0230" maxlength="4" pattern="[0-9]{4}" required>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </section>
 
-            <!-- Activations -->
-            <section>
-                <h2>Activations</h2>
-                <div id="activations-container"></div>
+                <button type="button" class="btn btn-add" onclick="addActivation()">
+                    ➕ Add Additional Activation
+                </button>
+            </div>
+
+            <div class="section fade-in">
+                <h2 class="section-title">Time Off Preferences</h2>
                 
-                <div class="buttons">
-                    <button class="button primary" onclick="addActivation()">Add Activation</button>
-                    <button class="button" onclick="generateReport()">Generate Report</button>
-                    <button class="button small" onclick="clearAll()">Clear All</button>
+                <div class="form-group">
+                    <label>PTO Taken (if any)</label>
+                    <div class="pto-input-group">
+                        <div class="input-with-label">
+                            <input type="number" id="pto-hours" class="has-suffix" min="0" max="24" value="0" placeholder="0">
+                            <span class="input-suffix">hrs</span>
+                        </div>
+                        <div class="input-with-label">
+                            <input type="number" id="pto-minutes" class="has-suffix" min="0" max="59" value="0" placeholder="0">
+                            <span class="input-suffix">mins</span>
+                        </div>
+                    </div>
+                    <span class="info-badge">Leave as 0 if not using PTO</span>
                 </div>
-            </section>
 
-            <!-- Results -->
-            <div id="results"></div>
+                <div class="form-group">
+                    <label>UTO Type</label>
+                    <select id="uto-type" onchange="toggleUTOFields()">
+                        <option value="">Select UTO type...</option>
+                        <option value="AM">AM UTO (Come in later)</option>
+                        <option value="PM">PM UTO (Leave earlier)</option>
+                    </select>
+                </div>
+
+                <div id="am-uto-fields" class="hidden">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="duty-start">Duty Start Time</label>
+                            <input type="text" id="duty-start" class="time-input" placeholder="e.g. 0800" maxlength="4" pattern="[0-9]{4}">
+                        </div>
+                        <div class="form-col">
+                            <label for="duty-name-am">Duty Name</label>
+                            <input type="text" id="duty-name-am" placeholder="e.g. ICL A">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pm-uto-fields" class="hidden">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="duty-end">Duty End Time</label>
+                            <input type="text" id="duty-end" class="time-input" placeholder="e.g. 1700" maxlength="4" pattern="[0-9]{4}">
+                        </div>
+                        <div class="form-col">
+                            <label for="duty-name-pm">Duty Name</label>
+                            <input type="text" id="duty-name-pm" placeholder="e.g. ICL A">
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="lunch-forfeit">
+                        <label for="lunch-forfeit">Forfeit lunch break (+1 hour)</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-calculate" onclick="calculateUTO()">
+                🧮 Calculate UTO
+            </button>
+
+            <div id="output" class="output-section hidden">
+                <div class="output-content">
+                    <h3>
+                        Calculation Result
+                        <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+                    </h3>
+                    <div id="output-text" class="output-text"></div>
+                </div>
+            </div>
+
+            <div id="error" class="error hidden">
+                <span>⚠️</span>
+                <span id="error-message"></span>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    let activationCount = 0;
-    let activations = [];
+    <script>
+        let activationCount = 1;
 
-    function addActivation() {
-        activationCount++;
-        const container = document.getElementById('activations-container');
-        
-        const activationDiv = document.createElement('div');
-        activationDiv.className = 'tile';
-        activationDiv.id = `activation-${activationCount}`;
-        
-        activationDiv.innerHTML = `
-            <h3>Activation ${activationCount}</h3>
-            <form>
-                <div class="grid grid-2">
-                    <div>
-                        <label for="act-${activationCount}">Activation Time (ACT)</label>
-                        <input type="text" id="act-${activationCount}" placeholder="e.g., 2300" maxlength="4" oninput="autoCalculate(${activationCount})">
-                    </div>
-                    <div>
-                        <label for="rot-${activationCount}">Room Out Time (ROT)</label>
-                        <input type="text" id="rot-${activationCount}" placeholder="e.g., 0200" maxlength="4" oninput="autoCalculate(${activationCount})">
-                    </div>
+        // Auto-capitalize inputs
+        document.addEventListener('input', function(e) {
+            if (e.target.id === 'initials' || e.target.id === 'duty-name-am' || e.target.id === 'duty-name-pm') {
+                e.target.value = e.target.value.toUpperCase();
+            }
+        });
+
+        function addActivation() {
+            activationCount++;
+            const container = document.getElementById('activations-container');
+            const activationDiv = document.createElement('div');
+            activationDiv.className = 'activation-group additional fade-in';
+            activationDiv.id = `activation-${activationCount}`;
+            
+            activationDiv.innerHTML = `
+                <div class="activation-header">
+                    <span>Additional Activation ${activationCount - 1}</span>
+                    <button class="remove-activation" onclick="removeActivation(${activationCount})">Remove</button>
                 </div>
-                <div class="buttons">
-                    <button type="button" class="button small" onclick="removeActivation(${activationCount})">Remove Activation</button>
-                </div>
-            </form>
-            <div id="result-${activationCount}"></div>
-        `;
-        
-        container.appendChild(activationDiv);
-    }
-
-    function removeActivation(id) {
-        const element = document.getElementById(`activation-${id}`);
-        if (element) {
-            element.remove();
-            activations = activations.filter(a => a.id !== id);
-            calculateTotal();
-        }
-    }
-
-    function autoCalculate(id) {
-        const actInput = document.getElementById(`act-${id}`);
-        const rotInput = document.getElementById(`rot-${id}`);
-        
-        if (actInput.value.trim() && rotInput.value.trim()) {
-            calculateUTO(id);
-        }
-    }
-
-    function timeToMinutes(timeStr) {
-        let cleanTimeStr = timeStr.replace(':', '').trim();
-        
-        if (!/^\d{3,4}$/.test(cleanTimeStr)) {
-            throw new Error('Invalid time format. Use HHMM (e.g., 2300, 0630)');
-        }
-        
-        cleanTimeStr = cleanTimeStr.padStart(4, '0');
-        
-        const hours = parseInt(cleanTimeStr.substring(0, 2), 10);
-        const minutes = parseInt(cleanTimeStr.substring(2, 4), 10);
-        
-        if (hours > 23 || minutes > 59) {
-            throw new Error('Invalid time. Hours must be 00-23, minutes must be 00-59');
-        }
-        
-        return hours * 60 + minutes;
-    }
-
-    function minutesToHours(minutes) {
-        const hours = Math.floor(minutes / 60);
-        const mins = minutes % 60;
-        return mins === 0 ? `${hours}h` : `${hours}h ${mins}m`;
-    }
-
-    function calculateUTO(id) {
-        const actInput = document.getElementById(`act-${id}`);
-        const rotInput = document.getElementById(`rot-${id}`);
-        const resultDiv = document.getElementById(`result-${id}`);
-        
-        const actTime = actInput.value.trim();
-        const rotTime = rotInput.value.trim();
-        
-        if (!actTime || !rotTime) {
-            resultDiv.innerHTML = '<div class="message error">Please enter both activation time and room out time.</div>';
-            return;
-        }
-        
-        try {
-            const actMinutes = timeToMinutes(actTime);
-            const rotMinutes = timeToMinutes(rotTime);
-        
-            let adjustedRotMinutes = rotMinutes;
-            if (rotMinutes < actMinutes) {
-                adjustedRotMinutes += 24 * 60;
-            }
-            
-            const sixAM = 6 * 60;
-            let uto = 0;
-            let explanation = [];
-            
-            // Calculate work during UTO period (12am-6am)
-            let workDuringUTOPeriod = 0;
-            
-            if (actMinutes < sixAM && rotMinutes <= sixAM && rotMinutes >= actMinutes) {
-                // Case 1: Both ACT and ROT are within 12am-6am same day
-                workDuringUTOPeriod = rotMinutes - actMinutes;
-                explanation.push(`Work within 12am-6am: ${actTime}-${rotTime} = ${minutesToHours(workDuringUTOPeriod)}`);
-            }
-            else if (actMinutes >= 18 * 60 && adjustedRotMinutes > 24 * 60) {
-                // Case 2: Work crosses midnight
-                const workAfterMidnight = Math.min(adjustedRotMinutes - (24 * 60), sixAM);
-                workDuringUTOPeriod = workAfterMidnight;
-                explanation.push(`Work crossing midnight, UTO period: ${minutesToHours(workDuringUTOPeriod)}`);
-            }
-            else if (actMinutes < sixAM && adjustedRotMinutes > sixAM) {
-                // Case 3: Starts in UTO period, ends after 6am
-                workDuringUTOPeriod = sixAM - actMinutes;
-                explanation.push(`Work from ${actTime} until 6am: ${minutesToHours(workDuringUTOPeriod)}`);
-            }
-            
-            uto = workDuringUTOPeriod;
-            
-            // Store activation data
-            const existingIndex = activations.findIndex(a => a.id === id);
-            const activationData = {
-                id: id,
-                act: actTime,
-                rot: rotTime,
-                baseUTO: uto,
-                explanation: explanation.join(', ')
-            };
-            
-            if (existingIndex >= 0) {
-                activations[existingIndex] = activationData;
-            } else {
-                activations.push(activationData);
-            }
-            
-            // Display result
-            if (uto === 0) {
-                resultDiv.innerHTML = `
-                    <div class="message error">
-                        <strong>No UTO:</strong> No qualifying work between 12am-6am
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>ACT (Activation Time)</label>
+                        <input type="text" class="time-input act-input" placeholder="e.g. 0430" maxlength="4" pattern="[0-9]{4}">
                     </div>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <div class="message success">
-                        <strong>Base UTO:</strong> ${minutesToHours(uto)}<br>
-                        <small>${explanation.join(', ')}</small>
+                    <div class="form-col">
+                        <label>ROT (Room Out Time)</label>
+                        <input type="text" class="time-input rot-input" placeholder="e.g. 0530" maxlength="4" pattern="[0-9]{4}">
                     </div>
-                `;
-            }
-            
-            calculateTotal();
-        } catch (error) {
-            resultDiv.innerHTML = `<div class="message error">${error.message}</div>`;
-        }
-    }
-
-    function calculateTotal() {
-        if (activations.length === 0) {
-            document.getElementById('results').innerHTML = '';
-            return;
-        }
-        
-        let totalUTO = 0;
-        let resultsHTML = '<div class="results"><h2>UTO Calculation Results</h2>';
-        
-        activations.forEach((activation, index) => {
-            let utoForThisActivation = activation.baseUTO;
-            let bonusText = '';
-            
-            if (index === 0 && activation.baseUTO > 0) {
-                utoForThisActivation += 60;
-                bonusText = ' (+1h bonus for first activation)';
-            }
-            
-            totalUTO += utoForThisActivation;
-            
-            resultsHTML += `
-                <div class="result-item">
-                    <strong>Activation ${activation.id}:</strong> ${activation.act} - ${activation.rot}<br>
-                    <strong>UTO:</strong> ${minutesToHours(utoForThisActivation)}${bonusText}<br>
-                    <small>Base: ${minutesToHours(activation.baseUTO)}${index === 0 && activation.baseUTO > 0 ? ', +1h bonus = ' + minutesToHours(activation.baseUTO + 60) : ''}</small><br>
-                    <small>${activation.explanation}</small>
                 </div>
             `;
-        });
-        
-        const cappedTotal = Math.min(totalUTO, 4.5 * 60);
-        const wasCapped = totalUTO > 4.5 * 60;
-        
-        resultsHTML += `
-            <div class="total-result">
-                <h4>Total UTO: ${minutesToHours(cappedTotal)}</h4>
-                ${wasCapped ? '<p>⚠️ Total capped at 4.5 hours maximum</p>' : ''}
-            </div>
-        </div>`;
-        
-        document.getElementById('results').innerHTML = resultsHTML;
-    }
+            
+            container.appendChild(activationDiv);
+        }
 
-    function getCurrentDate() {
-        const now = new Date();
-        const day = now.getDate();
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const month = monthNames[now.getMonth()];
-        const year = now.getFullYear();
-        
-        return `${day} ${month} ${year}`;
-    }
+        function removeActivation(id) {
+            document.getElementById(`activation-${id}`).remove();
+        }
 
-    function generateReport() {
-        const initials = document.getElementById('initials').value.trim().toUpperCase();
-        const modality = document.getElementById('modality').value.trim().toUpperCase();
-        
-        if (!initials || !modality) {
-            alert('Please enter both initials and modality before generating report.');
-            return;
-        }
-        
-        if (activations.length === 0) {
-            alert('Please add at least one activation before generating report.');
-            return;
-        }
-        
-        let totalUTO = 0;
-        activations.forEach((activation, index) => {
-            let utoForThisActivation = activation.baseUTO;
-            // Add +1 hour bonus to every activation (if it has UTO > 0)
-            if (activation.baseUTO > 0) {
-                utoForThisActivation += 60;
-            }
-            totalUTO += utoForThisActivation;
-        });
-        
-        const cappedTotal = Math.min(totalUTO, 4.5 * 60);
-        
-        let reportText = `${getCurrentDate()}\n`;
-        reportText += `${initials} ${modality} on call\n\n`;
-        
-        activations.forEach((activation) => {
-            reportText += `ACT: ${activation.act}\n`;
-            reportText += `ROT: ${activation.rot}\n\n`;
-        });
-        
-        reportText += `UTO: ${minutesToHours(cappedTotal)}`;
-        
-        // Store report text globally for copying
-        window.currentReport = reportText;
-        
-        const reportDiv = document.createElement('div');
-        reportDiv.innerHTML = `
-            <section>
-                <div class="tile">
-                    <h3>Generated Report</h3>
-                    <div class="report-box">
-                        <pre>${reportText}</pre>
-                    </div>
-                    <div class="buttons">
-                        <button class="button primary" onclick="copyReport()">Copy to Clipboard</button>
-                    </div>
-                </div>
-            </section>
-        `;
-        
-        const existingResults = document.getElementById('results');
-        if (existingResults.innerHTML) {
-            existingResults.appendChild(reportDiv.firstElementChild);
-        } else {
-            document.getElementById('results').innerHTML = reportDiv.innerHTML;
-        }
-    }
-
-    function copyReport() {
-        const reportText = window.currentReport;
-        
-        if (!reportText) {
-            alert('No report to copy. Please generate a report first.');
-            return;
-        }
-        
-        // Try modern clipboard API first
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(reportText).then(() => {
-                alert('Report copied to clipboard!');
-            }).catch(() => {
-                // Fallback if modern API fails
-                fallbackCopyToClipboard(reportText);
-            });
-        } else {
-            // Use fallback method
-            fallbackCopyToClipboard(reportText);
-        }
-    }
-    
-    function fallbackCopyToClipboard(text) {
-        // Create temporary textarea
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-999999px';
-        textarea.style.top = '-999999px';
-        document.body.appendChild(textarea);
-        
-        // Select and copy
-        textarea.focus();
-        textarea.select();
-        
-        try {
-            const successful = document.execCommand('copy');
-            if (successful) {
-                alert('Report copied to clipboard!');
+        function toggleUTOFields() {
+            const utoType = document.getElementById('uto-type').value;
+            const amFields = document.getElementById('am-uto-fields');
+            const pmFields = document.getElementById('pm-uto-fields');
+            
+            if (utoType === 'AM') {
+                amFields.classList.remove('hidden');
+                pmFields.classList.add('hidden');
+            } else if (utoType === 'PM') {
+                pmFields.classList.remove('hidden');
+                amFields.classList.add('hidden');
             } else {
-                alert('Copy failed. Please manually select and copy the text above.');
+                amFields.classList.add('hidden');
+                pmFields.classList.add('hidden');
             }
-        } catch (err) {
-            alert('Copy not supported. Please manually select and copy the text above.');
         }
-        
-        document.body.removeChild(textarea);
-    }
 
-    function clearAll() {
-        document.getElementById('activations-container').innerHTML = '';
-        document.getElementById('results').innerHTML = '';
-        document.getElementById('initials').value = '';
-        document.getElementById('modality').value = '';
-        activations = [];
-        activationCount = 0;
-    }
+        function parseTime(timeStr) {
+            if (!timeStr || timeStr.length !== 4) return null;
+            const hours = parseInt(timeStr.substring(0, 2));
+            const minutes = parseInt(timeStr.substring(2, 4));
+            if (hours > 23 || minutes > 59) return null;
+            return { hours, minutes };
+        }
 
-    // Add first activation on load
-    addActivation();
-</script>
+        function timeToMinutes(timeObj) {
+            return timeObj.hours * 60 + timeObj.minutes;
+        }
 
+        function minutesToTime(minutes) {
+            const hours = Math.floor(minutes / 60) % 24;
+            const mins = minutes % 60;
+            return `${hours.toString().padStart(2, '0')}${mins.toString().padStart(2, '0')}`;
+        }
+
+        function calculateActivationUTO(actTime, rotTime) {
+            let actMinutes = timeToMinutes(actTime);
+            let rotMinutes = timeToMinutes(rotTime);
+            
+            // Handle overnight activations (ACT after 1700, ROT before 0600)
+            if (actTime.hours >= 17 && rotTime.hours < 6) {
+                // Round ACT up to midnight (0000)
+                actMinutes = 0;
+            } else if (rotMinutes < actMinutes) {
+                // ROT is next day
+                rotMinutes += 24 * 60;
+            }
+            
+            // Calculate duration in minutes
+            let durationMinutes = rotMinutes - actMinutes;
+            
+            // Add 1 hour (60 minutes) per activation
+            durationMinutes += 60;
+            
+            // Cap at 4.5 hours (270 minutes) per activation
+            durationMinutes = Math.min(durationMinutes, 270);
+            
+            return Math.max(0, durationMinutes);
+        }
+
+        function roundToNearest15(minutes) {
+            return Math.round(minutes / 15) * 15;
+        }
+
+        function minutesToHoursMinutes(totalMinutes) {
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            return { hours, minutes };
+        }
+
+        function formatHoursMinutes(hoursMinutesObj) {
+            if (hoursMinutesObj.hours === 0 && hoursMinutesObj.minutes === 0) {
+                return "0 minutes";
+            } else if (hoursMinutesObj.hours === 0) {
+                return `${hoursMinutesObj.minutes} minutes`;
+            } else if (hoursMinutesObj.minutes === 0) {
+                return `${hoursMinutesObj.hours} hour${hoursMinutesObj.hours !== 1 ? 's' : ''}`;
+            } else {
+                return `${hoursMinutesObj.hours} hour${hoursMinutesObj.hours !== 1 ? 's' : ''} ${hoursMinutesObj.minutes} minutes`;
+            }
+        }
+
+        function addMinutesToTime(timeStr, minutesToAdd) {
+            const time = parseTime(timeStr);
+            if (!time) return timeStr;
+            
+            let totalMinutes = timeToMinutes(time) + minutesToAdd;
+            
+            // Handle day overflow
+            if (totalMinutes >= 24 * 60) {
+                totalMinutes = totalMinutes % (24 * 60);
+            }
+            
+            return minutesToTime(totalMinutes);
+        }
+
+        function subtractMinutesFromTime(timeStr, minutesToSubtract) {
+            const time = parseTime(timeStr);
+            if (!time) return timeStr;
+            
+            let totalMinutes = timeToMinutes(time) - minutesToSubtract;
+            
+            // Handle negative time (previous day)
+            if (totalMinutes < 0) {
+                totalMinutes += 24 * 60;
+            }
+            
+            return minutesToTime(totalMinutes);
+        }
+
+        function calculateUTO() {
+            // Clear previous errors
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('output').classList.add('hidden');
+            
+            try {
+                // Get all activation times
+                const activations = [];
+                const actInputs = document.querySelectorAll('.act-input');
+                const rotInputs = document.querySelectorAll('.rot-input');
+                
+                for (let i = 0; i < actInputs.length; i++) {
+                    const actValue = actInputs[i].value.trim();
+                    const rotValue = rotInputs[i].value.trim();
+                    
+                    if (actValue && rotValue) {
+                        const actTime = parseTime(actValue);
+                        const rotTime = parseTime(rotValue);
+                        
+                        if (!actTime || !rotTime) {
+                            throw new Error(`Invalid time format in activation ${i + 1}. Please use 24-hour format (e.g., 2130).`);
+                        }
+                        
+                        activations.push({ act: actTime, rot: rotTime, actStr: actValue, rotStr: rotValue });
+                    }
+                }
+                
+                if (activations.length === 0) {
+                    throw new Error('Please enter at least one activation (ACT and ROT).');
+                }
+                
+                // Get form values
+                const modality = document.getElementById('modality').value;
+                const initials = document.getElementById('initials').value.trim().toUpperCase();
+                const ptoHours = parseInt(document.getElementById('pto-hours').value) || 0;
+                const ptoMinutes = parseInt(document.getElementById('pto-minutes').value) || 0;
+                const utoType = document.getElementById('uto-type').value;
+                
+                if (!modality || !initials) {
+                    throw new Error('Please fill in all required fields (modality and initials).');
+                }
+                
+                // Calculate total UTO
+                let totalUTOMinutes = 0;
+                
+                activations.forEach((activation, index) => {
+                    const activationUTO = calculateActivationUTO(activation.act, activation.rot);
+                    totalUTOMinutes += activationUTO;
+                });
+                
+                // Round to nearest 15 minutes
+                totalUTOMinutes = roundToNearest15(totalUTOMinutes);
+                const totalUTO = minutesToHoursMinutes(totalUTOMinutes);
+                
+                // Calculate PTO
+                const totalPTOMinutes = ptoHours * 60 + ptoMinutes;
+                const totalPTO = minutesToHoursMinutes(totalPTOMinutes);
+                
+                // Generate output
+                const currentDate = new Date();
+                const dateStr = currentDate.toLocaleDateString('en-GB', { 
+                    day: '2-digit', 
+                    month: 'short', 
+                    year: '2-digit' 
+                }).replace(/ /g, ' ');
+                
+                let output = `${dateStr}\n${initials} ${modality} On-call\n\n`;
+                
+                // Add activation times
+                activations.forEach((activation, index) => {
+                    if (index === 0) {
+                        output += `ACT: ${activation.actStr}\n`;
+                        output += `ROT: ${activation.rotStr}\n`;
+                    } else {
+                        output += `ACT ${index + 1}: ${activation.actStr}\n`;
+                        output += `ROT ${index + 1}: ${activation.rotStr}\n`;
+                    }
+                });
+                
+                output += `\nUTO: ${formatHoursMinutes(totalUTO)}\n`;
+                
+                if (totalPTOMinutes > 0) {
+                    output += `PTO: ${formatHoursMinutes(totalPTO)}\n`;
+                }
+                
+                // Handle AM/PM UTO
+                if (utoType === 'AM') {
+                    const dutyStart = document.getElementById('duty-start').value.trim();
+                    const dutyNameAM = document.getElementById('duty-name-am').value.trim().toUpperCase();
+                    
+                    if (!dutyStart || !dutyNameAM) {
+                        throw new Error('Please fill in duty start time and duty name for AM UTO.');
+                    }
+                    
+                    const newStartTime = addMinutesToTime(dutyStart, totalUTOMinutes + totalPTOMinutes);
+                    output += `\n${dutyNameAM} in at ${newStartTime}`;
+                    
+                } else if (utoType === 'PM') {
+                    const dutyEnd = document.getElementById('duty-end').value.trim();
+                    const dutyNamePM = document.getElementById('duty-name-pm').value.trim().toUpperCase();
+                    const lunchForfeit = document.getElementById('lunch-forfeit').checked;
+                    
+                    if (!dutyEnd || !dutyNamePM) {
+                        throw new Error('Please fill in duty end time and duty name for PM UTO.');
+                    }
+                    
+                    let totalMinutesEarly = totalUTOMinutes + totalPTOMinutes;
+                    if (lunchForfeit) {
+                        totalMinutesEarly += 60; // Add 1 hour for lunch
+                    }
+                    
+                    const newEndTime = subtractMinutesFromTime(dutyEnd, totalMinutesEarly);
+                    output += `\n${dutyNamePM} out at ${newEndTime}`;
+                    
+                    if (lunchForfeit) {
+                        output += ` (lunch included)`;
+                    }
+                }
+                
+                document.getElementById('output-text').textContent = output;
+                document.getElementById('output').classList.remove('hidden');
+                document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+            } catch (error) {
+                document.getElementById('error-message').textContent = error.message;
+                document.getElementById('error').classList.remove('hidden');
+                document.getElementById('error').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('output-text').textContent;
+            navigator.clipboard.writeText(outputText).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = outputText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const copyBtn = document.querySelector('.copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
