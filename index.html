@@ -123,6 +123,7 @@
         .form-col {
             display: flex;
             flex-direction: column;
+            margin-bottom: 24px;
         }
 
         label {
@@ -451,8 +452,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏥 UTO Calculator</h1>
-            <p>Calculate Unrecorded Time Off from overnight activations</p>
+            <h1>UTO Calculator</h1>
+            <p>Calculate Unrecorded Time Off</p>
         </div>
 
         <div class="form-container">
@@ -472,7 +473,7 @@
                     
                     <div class="form-col">
                         <label for="initials">Initials</label>
-                        <input type="text" id="initials" placeholder="e.g. BYT" maxlength="4" required>
+                        <input type="text" id="initials" placeholder="e.g. BYT" maxlength="5" required>
                     </div>
                 </div>
 
@@ -495,7 +496,7 @@
                 </div>
 
                 <button type="button" class="btn btn-add" onclick="addActivation()">
-                    ➕ Add Additional Activation
+                    Add Additional Activation
                 </button>
             </div>
 
@@ -558,7 +559,7 @@
             </div>
 
             <button type="button" class="btn btn-calculate" onclick="calculateUTO()">
-                🧮 Calculate UTO
+                Calculate UTO
             </button>
 
             <div id="output" class="output-section hidden">
