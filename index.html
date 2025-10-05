@@ -11,107 +11,134 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            position: relative;
             padding: 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 219, 112, 0.2) 0%, transparent 50%);
+            z-index: -1;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 40px 30px;
+        header {
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.5s ease-out;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
         }
 
-        .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 12px;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            opacity: 0.95;
-            font-size: 1.15rem;
-            position: relative;
-            z-index: 1;
-            font-weight: 300;
-        }
-
-        .form-container {
-            padding: 40px;
+        header p {
+            color: var(--gray);
+            font-size: 1.1rem;
         }
 
         .section {
-            background: white;
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 25px;
+            animation: fadeIn 0.6s ease-out backwards;
         }
 
-        .section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
+
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
 
         .section-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            margin-bottom: 28px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid #3498db;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
             display: flex;
             align-items: center;
-            font-weight: 700;
+            gap: 10px;
         }
 
         .section-title::before {
             content: '';
-            width: 10px;
-            height: 10px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border-radius: 50%;
-            margin-right: 12px;
-            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .form-row {
@@ -123,51 +150,44 @@
         .form-col {
             display: flex;
             flex-direction: column;
-            margin-bottom: 24px;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
-            color: #34495e;
+            color: var(--dark);
             font-size: 0.95rem;
-            letter-spacing: 0.2px;
         }
 
         input, select {
             width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e8ecef;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #fafbfc;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            background: var(--light-gray);
+            border-radius: 10px;
+            transition: var(--transition);
+            outline: none;
             font-family: inherit;
         }
 
         input:focus, select:focus {
-            outline: none;
-            border-color: #3498db;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.08);
-            transform: translateY(-1px);
-        }
-
-        .time-input {
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-            font-weight: 600;
+            background: var(--white);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .pto-input-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            min-width: 0;
         }
 
         .input-with-label {
             position: relative;
+            min-width: 0;
         }
 
         .input-suffix {
@@ -175,7 +195,7 @@
             right: 18px;
             top: 50%;
             transform: translateY(-50%);
-            color: #7f8c8d;
+            color: var(--gray);
             font-size: 0.9rem;
             font-weight: 500;
             pointer-events: none;
@@ -186,128 +206,123 @@
         }
 
         .activation-group {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: var(--white);
             border: 2px dashed #dee2e6;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 18px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .activation-group:hover {
-            border-color: #3498db;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            transition: var(--transition);
         }
 
         .activation-group.additional {
-            border-color: #27ae60;
-            background: linear-gradient(135deg, #f8fff8 0%, #e8f8e8 100%);
-        }
-
-        .activation-group.additional:hover {
-            border-color: #27ae60;
-            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.15);
+            background: var(--white);
         }
 
         .activation-header {
-            font-weight: 700;
-            color: #495057;
-            margin-bottom: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
         .remove-activation {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: linear-gradient(135deg, var(--danger), #dc2626);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
         }
 
         .remove-activation:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+            box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
         }
 
         .btn {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
             border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1.05rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
-            letter-spacing: 0.3px;
+            gap: 8px;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.4);
+        .btn:hover:not(:disabled) {
+            background: rgba(99, 102, 241, 0.15);
         }
 
-        .btn:active {
-            transform: translateY(-1px);
+        .btn:active:not(:disabled) {
+            transform: scale(0.98);
         }
 
         .btn-add {
-            background: linear-gradient(135deg, #27ae60, #229954);
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
             margin-top: 10px;
         }
 
         .btn-add:hover {
-            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
+            background: rgba(99, 102, 241, 0.15);
         }
 
         .btn-calculate {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            font-size: 1.2rem;
-            padding: 18px 36px;
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: var(--white);
+            font-size: 1.25rem;
+            padding: 14px 36px;
             width: 100%;
-            margin-top: 20px;
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.35);
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+            border: none;
         }
 
-        .btn-calculate:hover {
-            box-shadow: 0 12px 35px rgba(231, 76, 60, 0.45);
+        .btn-calculate:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: var(--white);
+            box-shadow: 0 10px 20px -3px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-calculate:active:not(:disabled) {
+            transform: translateY(0);
+            background: linear-gradient(135deg, var(--danger), #dc2626);
         }
 
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            transition: background 0.3s ease;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            transition: var(--transition);
         }
 
         .checkbox-group:hover {
-            background: #e9ecef;
+            background: #e2e8f0;
         }
 
         .checkbox-group input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             margin: 0;
             cursor: pointer;
-            accent-color: #3498db;
+            accent-color: var(--primary);
         }
 
         .checkbox-group label {
@@ -317,25 +332,19 @@
         }
 
         .output-section {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
-            color: white;
-            border-radius: 20px;
-            padding: 35px;
-            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--dark);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 25px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
         }
 
         .output-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            pointer-events: none;
+            display: none;
         }
 
         .output-content {
@@ -344,245 +353,313 @@
         }
 
         .output-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-weight: 700;
+            color: var(--dark);
         }
 
         .copy-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            color: var(--primary);
             padding: 10px 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.95rem;
             font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            transition: var(--transition);
         }
 
         .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(99, 102, 241, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
         }
 
         .output-text {
-            background: rgba(255, 255, 255, 0.12);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 25px;
+            background: var(--light-gray);
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
             font-family: 'Courier New', monospace;
             line-height: 1.8;
             white-space: pre-line;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .breakdown-section {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            font-size: 1.05rem;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            margin-top: 25px;
+        }
+
+        .breakdown-item {
+            background: var(--light-gray);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .breakdown-item:hover {
+            background: #e2e8f0;
+            border-left-color: var(--secondary);
+        }
+
+        .breakdown-header {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .breakdown-details {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .breakdown-calculation {
+            font-family: 'Courier New', monospace;
+            background: var(--white);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-size: 0.85rem;
+        }
+
+        .breakdown-total {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
         .error {
-            background: linear-gradient(135deg, #fee, #fdd);
-            border: 2px solid #fcc;
-            color: #c33;
-            padding: 18px 20px;
-            border-radius: 12px;
-            margin-top: 20px;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: var(--danger);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--danger);
+            margin-bottom: 20px;
+            animation: shake 0.5s;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            box-shadow: 0 5px 20px rgba(204, 51, 51, 0.15);
+            gap: 10px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .hidden {
             display: none;
         }
 
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 25px;
-            }
-            
-            .section {
-                padding: 25px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .header {
-                padding: 30px 20px;
-            }
-
-            .btn-calculate {
-                font-size: 1.1rem;
-                padding: 16px 28px;
-            }
-
-            .pto-input-group {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .info-badge {
             display: inline-block;
-            background: rgba(52, 152, 219, 0.1);
-            color: #3498db;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
             padding: 6px 12px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+
+            header {
+                padding: 25px 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-calculate {
+                font-size: 1rem;
+                padding: 12px 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            header {
+                padding: 20px 15px;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <header>
             <h1>UTO Calculator</h1>
-            <p>Calculate Unrecorded Time Off</p>
-        </div>
+            <p>Calculate Unrecorded Time Off from overnight activations</p>
+        </header>
 
-        <div class="form-container">
-            <div class="section fade-in">
-                <h2 class="section-title">Basic Information</h2>
-                
-                <div class="form-row">
-                    <div class="form-col">
-                        <label for="modality">On-call Modality</label>
-                        <select id="modality" required>
-                            <option value="">Select modality...</option>
-                            <option value="IR">IR</option>
-                            <option value="ICL">ICL</option>
-                            <option value="HOT">HOT</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-col">
-                        <label for="initials">Initials</label>
-                        <input type="text" id="initials" placeholder="e.g. BYT" maxlength="5" required>
-                    </div>
-                </div>
-
-                <div id="activations-container">
-                    <div class="activation-group">
-                        <div class="activation-header">
-                            <span>Primary Activation</span>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col">
-                                <label>ACT (Activation Time)</label>
-                                <input type="text" class="time-input act-input" placeholder="e.g. 2130" maxlength="4" pattern="[0-9]{4}" required>
-                            </div>
-                            <div class="form-col">
-                                <label>ROT (Room Out Time)</label>
-                                <input type="text" class="time-input rot-input" placeholder="e.g. 0230" maxlength="4" pattern="[0-9]{4}" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-add" onclick="addActivation()">
-                    Add Additional Activation
-                </button>
-            </div>
-
-            <div class="section fade-in">
-                <h2 class="section-title">Time Off Preferences</h2>
-                
-                <div class="form-group">
-                    <label>PTO Taken (if any)</label>
-                    <div class="pto-input-group">
-                        <div class="input-with-label">
-                            <input type="number" id="pto-hours" class="has-suffix" min="0" max="24" value="0" placeholder="0">
-                            <span class="input-suffix">hrs</span>
-                        </div>
-                        <div class="input-with-label">
-                            <input type="number" id="pto-minutes" class="has-suffix" min="0" max="59" value="0" placeholder="0">
-                            <span class="input-suffix">mins</span>
-                        </div>
-                    </div>
-                    <span class="info-badge">Leave as 0 if not using PTO</span>
-                </div>
-
-                <div class="form-group">
-                    <label>UTO Type</label>
-                    <select id="uto-type" onchange="toggleUTOFields()">
-                        <option value="">Select UTO type...</option>
-                        <option value="AM">AM UTO (Come in later)</option>
-                        <option value="PM">PM UTO (Leave earlier)</option>
+        <div class="section">
+            <h2 class="section-title">Basic Information</h2>
+            
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="modality">On-call Modality</label>
+                    <select id="modality" required>
+                        <option value="">Select modality...</option>
+                        <option value="IR">IR</option>
+                        <option value="ICL">ICL</option>
+                        <option value="HOT">HOT</option>
                     </select>
                 </div>
-
-                <div id="am-uto-fields" class="hidden">
-                    <div class="form-row">
-                        <div class="form-col">
-                            <label for="duty-start">Duty Start Time</label>
-                            <input type="text" id="duty-start" class="time-input" placeholder="e.g. 0800" maxlength="4" pattern="[0-9]{4}">
-                        </div>
-                        <div class="form-col">
-                            <label for="duty-name-am">Duty Name</label>
-                            <input type="text" id="duty-name-am" placeholder="e.g. ICL A">
-                        </div>
-                    </div>
+                
+                <div class="form-col">
+                    <label for="initials">Initials</label>
+                    <input type="text" id="initials" placeholder="e.g. BYT" maxlength="4" required>
                 </div>
+            </div>
 
-                <div id="pm-uto-fields" class="hidden">
+            <div id="activations-container">
+                <div class="activation-group">
+                    <div class="activation-header">
+                        <span>Primary Activation</span>
+                    </div>
                     <div class="form-row">
                         <div class="form-col">
-                            <label for="duty-end">Duty End Time</label>
-                            <input type="text" id="duty-end" class="time-input" placeholder="e.g. 1700" maxlength="4" pattern="[0-9]{4}">
+                            <label>ACT (Activation Time)</label>
+                            <input type="text" class="act-input" placeholder="e.g. 2130" maxlength="4" pattern="[0-9]{4}" required>
                         </div>
                         <div class="form-col">
-                            <label for="duty-name-pm">Duty Name</label>
-                            <input type="text" id="duty-name-pm" placeholder="e.g. ICL A">
+                            <label>ROT (Room Out Time)</label>
+                            <input type="text" class="rot-input" placeholder="e.g. 0230" maxlength="4" pattern="[0-9]{4}" required>
                         </div>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="lunch-forfeit">
-                        <label for="lunch-forfeit">Forfeit lunch break (+1 hour)</label>
                     </div>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-calculate" onclick="calculateUTO()">
-                Calculate UTO
+            <button type="button" class="btn btn-add" onclick="addActivation()">
+                Add Additional Activation
             </button>
+        </div>
 
-            <div id="output" class="output-section hidden">
-                <div class="output-content">
-                    <h3>
-                        Calculation Result
-                        <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
-                    </h3>
-                    <div id="output-text" class="output-text"></div>
+        <div class="section">
+            <h2 class="section-title">Time Off Preferences</h2>
+            
+            <div class="form-group">
+                <label>PTO Taken (if any)</label>
+                <div class="pto-input-group">
+                    <div class="input-with-label">
+                        <input type="number" id="pto-hours" class="has-suffix" min="0" max="24" value="0" placeholder="0">
+                        <span class="input-suffix">hrs</span>
+                    </div>
+                    <div class="input-with-label">
+                        <input type="number" id="pto-minutes" class="has-suffix" min="0" max="59" value="0" placeholder="0">
+                        <span class="input-suffix">mins</span>
+                    </div>
+                </div>
+                <span class="info-badge">Leave as 0 if not using PTO</span>
+            </div>
+
+            <div class="form-group">
+                <label>UTO Type</label>
+                <select id="uto-type" onchange="toggleUTOFields()">
+                    <option value="">Select UTO type...</option>
+                    <option value="AM">AM UTO (Come in later)</option>
+                    <option value="PM">PM UTO (Leave earlier)</option>
+                </select>
+            </div>
+
+            <div id="am-uto-fields" class="hidden">
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="duty-start">Duty Start Time</label>
+                        <input type="text" id="duty-start" placeholder="e.g. 0800" maxlength="4" pattern="[0-9]{4}">
+                    </div>
+                    <div class="form-col">
+                        <label for="duty-name-am">Duty Name</label>
+                        <input type="text" id="duty-name-am" placeholder="e.g. ICL A">
+                    </div>
                 </div>
             </div>
 
-            <div id="error" class="error hidden">
-                <span>⚠️</span>
-                <span id="error-message"></span>
+            <div id="pm-uto-fields" class="hidden">
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="duty-end">Duty End Time</label>
+                        <input type="text" id="duty-end" placeholder="e.g. 1700" maxlength="4" pattern="[0-9]{4}">
+                    </div>
+                    <div class="form-col">
+                        <label for="duty-name-pm">Duty Name</label>
+                        <input type="text" id="duty-name-pm" placeholder="e.g. ICL A">
+                    </div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lunch-forfeit">
+                    <label for="lunch-forfeit">Forfeit lunch break (+1 hour)</label>
+                </div>
             </div>
+        </div>
+
+        <button type="button" class="btn btn-calculate" onclick="calculateUTO()">
+            Calculate UTO
+        </button>
+
+        <div id="error" class="error hidden">
+            <span>⚠️</span>
+            <span id="error-message"></span>
+        </div>
+
+        <div id="output" class="output-section hidden">
+            <div class="output-content">
+                <h3>
+                    Calculation Result
+                    <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+                </h3>
+                <div id="output-text" class="output-text"></div>
+            </div>
+        </div>
+
+        <div id="breakdown" class="breakdown-section hidden">
+            <h2 class="section-title">UTO Calculation Breakdown</h2>
+            <div id="breakdown-content"></div>
         </div>
     </div>
 
     <script>
         let activationCount = 1;
 
-        // Auto-capitalize inputs
         document.addEventListener('input', function(e) {
             if (e.target.id === 'initials' || e.target.id === 'duty-name-am' || e.target.id === 'duty-name-pm') {
                 e.target.value = e.target.value.toUpperCase();
@@ -593,7 +670,7 @@
             activationCount++;
             const container = document.getElementById('activations-container');
             const activationDiv = document.createElement('div');
-            activationDiv.className = 'activation-group additional fade-in';
+            activationDiv.className = 'activation-group additional';
             activationDiv.id = `activation-${activationCount}`;
             
             activationDiv.innerHTML = `
@@ -661,21 +738,23 @@
             
             // Handle overnight activations (ACT after 1700, ROT before 0600)
             if (actTime.hours >= 17 && rotTime.hours < 6) {
-                // Round ACT up to midnight (0000)
-                actMinutes = 0;
+                actMinutes = 0; // Round up to midnight
             } else if (rotMinutes < actMinutes) {
-                // ROT is next day
                 rotMinutes += 24 * 60;
             }
             
-            // Calculate duration in minutes
+            // Cap ROT at 0600 (360 minutes)
+            const cutoffMinutes = 6 * 60; // 0600
+            if (rotTime.hours >= 6) {
+                rotMinutes = Math.min(rotMinutes, cutoffMinutes);
+            }
+            
             let durationMinutes = rotMinutes - actMinutes;
             
-            // Add 1 hour (60 minutes) per activation
-            durationMinutes += 60;
-            
-            // Cap at 4.5 hours (270 minutes) per activation
-            durationMinutes = Math.min(durationMinutes, 270);
+            // Only add 1 hour bonus if ROT is before 0600
+            if (rotTime.hours < 6) {
+                durationMinutes += 60;
+            }
             
             return Math.max(0, durationMinutes);
         }
@@ -707,8 +786,6 @@
             if (!time) return timeStr;
             
             let totalMinutes = timeToMinutes(time) + minutesToAdd;
-            
-            // Handle day overflow
             if (totalMinutes >= 24 * 60) {
                 totalMinutes = totalMinutes % (24 * 60);
             }
@@ -721,8 +798,6 @@
             if (!time) return timeStr;
             
             let totalMinutes = timeToMinutes(time) - minutesToSubtract;
-            
-            // Handle negative time (previous day)
             if (totalMinutes < 0) {
                 totalMinutes += 24 * 60;
             }
@@ -731,12 +806,10 @@
         }
 
         function calculateUTO() {
-            // Clear previous errors
             document.getElementById('error').classList.add('hidden');
             document.getElementById('output').classList.add('hidden');
             
             try {
-                // Get all activation times
                 const activations = [];
                 const actInputs = document.querySelectorAll('.act-input');
                 const rotInputs = document.querySelectorAll('.rot-input');
@@ -761,7 +834,6 @@
                     throw new Error('Please enter at least one activation (ACT and ROT).');
                 }
                 
-                // Get form values
                 const modality = document.getElementById('modality').value;
                 const initials = document.getElementById('initials').value.trim().toUpperCase();
                 const ptoHours = parseInt(document.getElementById('pto-hours').value) || 0;
@@ -772,23 +844,69 @@
                     throw new Error('Please fill in all required fields (modality and initials).');
                 }
                 
-                // Calculate total UTO
                 let totalUTOMinutes = 0;
+                const activationBreakdowns = [];
                 
                 activations.forEach((activation, index) => {
-                    const activationUTO = calculateActivationUTO(activation.act, activation.rot);
-                    totalUTOMinutes += activationUTO;
+                    const actMinutes = timeToMinutes(activation.act);
+                    let rotMinutes = timeToMinutes(activation.rot);
+                    let adjustedActMinutes = actMinutes;
+                    let wasRounded = false;
+                    let wasCappedAt0600 = false;
+                    let bonusApplied = false;
+                    
+                    // Handle overnight activations
+                    if (activation.act.hours >= 17 && activation.rot.hours < 6) {
+                        adjustedActMinutes = 0; // Midnight
+                        wasRounded = true;
+                    } else if (rotMinutes < actMinutes) {
+                        rotMinutes += 24 * 60;
+                    }
+                    
+                    // Cap ROT at 0600 if it's 0600 or later
+                    const cutoffMinutes = 6 * 60; // 0600
+                    if (activation.rot.hours >= 6) {
+                        rotMinutes = Math.min(rotMinutes, cutoffMinutes);
+                        wasCappedAt0600 = true;
+                    }
+                    
+                    const duration = rotMinutes - adjustedActMinutes;
+                    let withBonus = duration;
+                    
+                    // Only add 1 hour bonus if ROT is before 0600
+                    if (activation.rot.hours < 6) {
+                        withBonus = duration + 60;
+                        bonusApplied = true;
+                    }
+                    
+                    activationBreakdowns.push({
+                        index: index + 1,
+                        actStr: activation.actStr,
+                        rotStr: activation.rotStr,
+                        wasRounded,
+                        wasCappedAt0600,
+                        bonusApplied,
+                        adjustedActStr: wasRounded ? '0000' : activation.actStr,
+                        adjustedRotStr: wasCappedAt0600 ? '0600' : activation.rotStr,
+                        duration,
+                        withBonus,
+                        uto: withBonus
+                    });
+                    
+                    totalUTOMinutes += withBonus;
                 });
                 
-                // Round to nearest 15 minutes
-                totalUTOMinutes = roundToNearest15(totalUTOMinutes);
-                const totalUTO = minutesToHoursMinutes(totalUTOMinutes);
+                // Apply 4.5 hour cap to total UTO
+                const cappedUTOMinutes = Math.min(totalUTOMinutes, 270);
+                const wasCapped = totalUTOMinutes > 270;
                 
-                // Calculate PTO
+                // Round to nearest 15 minutes
+                const roundedUTOMinutes = roundToNearest15(cappedUTOMinutes);
+                const totalUTO = minutesToHoursMinutes(roundedUTOMinutes);
+                
                 const totalPTOMinutes = ptoHours * 60 + ptoMinutes;
                 const totalPTO = minutesToHoursMinutes(totalPTOMinutes);
                 
-                // Generate output
                 const currentDate = new Date();
                 const dateStr = currentDate.toLocaleDateString('en-GB', { 
                     day: '2-digit', 
@@ -798,7 +916,6 @@
                 
                 let output = `${dateStr}\n${initials} ${modality} On-call\n\n`;
                 
-                // Add activation times
                 activations.forEach((activation, index) => {
                     if (index === 0) {
                         output += `ACT: ${activation.actStr}\n`;
@@ -815,7 +932,6 @@
                     output += `PTO: ${formatHoursMinutes(totalPTO)}\n`;
                 }
                 
-                // Handle AM/PM UTO
                 if (utoType === 'AM') {
                     const dutyStart = document.getElementById('duty-start').value.trim();
                     const dutyNameAM = document.getElementById('duty-name-am').value.trim().toUpperCase();
@@ -838,7 +954,7 @@
                     
                     let totalMinutesEarly = totalUTOMinutes + totalPTOMinutes;
                     if (lunchForfeit) {
-                        totalMinutesEarly += 60; // Add 1 hour for lunch
+                        totalMinutesEarly += 60;
                     }
                     
                     const newEndTime = subtractMinutesFromTime(dutyEnd, totalMinutesEarly);
@@ -851,6 +967,11 @@
                 
                 document.getElementById('output-text').textContent = output;
                 document.getElementById('output').classList.remove('hidden');
+                
+                // Create breakdown section
+                createBreakdown(activationBreakdowns, totalUTOMinutes, cappedUTOMinutes, roundedUTOMinutes, wasCapped);
+                document.getElementById('breakdown').classList.remove('hidden');
+                
                 document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
             } catch (error) {
@@ -865,12 +986,11 @@
             navigator.clipboard.writeText(outputText).then(() => {
                 const copyBtn = document.querySelector('.copy-btn');
                 const originalText = copyBtn.textContent;
-                copyBtn.textContent = '✅ Copied!';
+                copyBtn.textContent = 'Copied!';
                 setTimeout(() => {
                     copyBtn.textContent = originalText;
                 }, 2000);
             }).catch(() => {
-                // Fallback for older browsers
                 const textArea = document.createElement('textarea');
                 textArea.value = outputText;
                 document.body.appendChild(textArea);
@@ -880,11 +1000,64 @@
                 
                 const copyBtn = document.querySelector('.copy-btn');
                 const originalText = copyBtn.textContent;
-                copyBtn.textContent = '✅ Copied!';
+                copyBtn.textContent = 'Copied!';
                 setTimeout(() => {
                     copyBtn.textContent = originalText;
                 }, 2000);
             });
+        }
+
+        function createBreakdown(activationBreakdowns, totalBeforeCap, cappedTotal, roundedTotal, wasCapped) {
+            const breakdownContent = document.getElementById('breakdown-content');
+            let html = '';
+            
+            activationBreakdowns.forEach(breakdown => {
+                const durationHM = minutesToHoursMinutes(breakdown.duration);
+                const withBonusHM = minutesToHoursMinutes(breakdown.withBonus);
+                
+                html += `
+                    <div class="breakdown-item">
+                        <div class="breakdown-header">
+                            ${breakdown.index === 1 ? 'Primary Activation' : `Additional Activation ${breakdown.index - 1}`}
+                        </div>
+                        <div class="breakdown-details">
+                            <div>ACT: ${breakdown.actStr}${breakdown.wasRounded ? ' → Rounded to 0000 (midnight)' : ''}</div>
+                            <div>ROT: ${breakdown.rotStr}${breakdown.wasCappedAt0600 ? ' → Capped at 0600' : ''}</div>
+                            <div class="breakdown-calculation">
+                                Duration: ${formatHoursMinutes(durationHM)}<br>
+                                ${breakdown.bonusApplied ? '+ Bonus: 1 hour<br>' : ''}
+                                = <strong>${formatHoursMinutes(withBonusHM)}</strong>
+                                ${!breakdown.bonusApplied ? '<br><em style="color: var(--gray); font-size: 0.85rem;">(No bonus - ROT at or after 0600)</em>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            const totalBeforeCapHM = minutesToHoursMinutes(totalBeforeCap);
+            const cappedTotalHM = minutesToHoursMinutes(cappedTotal);
+            const roundedTotalHM = minutesToHoursMinutes(roundedTotal);
+            
+            html += `
+                <div class="breakdown-item" style="border-left-color: var(--secondary);">
+                    <div class="breakdown-header">Total Calculation</div>
+                    <div class="breakdown-details">
+                        <div class="breakdown-calculation">
+                            Sum of all activations: <strong>${formatHoursMinutes(totalBeforeCapHM)}</strong>
+                            ${wasCapped ? `<br>Applied 4.5 hour cap: <strong>${formatHoursMinutes(cappedTotalHM)}</strong>` : ''}
+                            <br>Rounded to nearest 15 min: <strong>${formatHoursMinutes(roundedTotalHM)}</strong>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            html += `
+                <div class="breakdown-total">
+                    Final UTO: ${formatHoursMinutes(roundedTotalHM)}
+                </div>
+            `;
+            
+            breakdownContent.innerHTML = html;
         }
     </script>
 </body>
